@@ -11,7 +11,12 @@
   <form [formGroup]="form" (ngSubmit)="guardar()">
 
     <ion-list lines="full">
-
+    <!-- H4 (CONSISTENCIA Y ESTÁNDARES) - 3: Los campos del modal de añadir se ven uniformes,
+     gracias a que todos tienen labelPlacement="stacked" -->
+    <!-- H6 (RECONOCIMIENTO EN VEZ DE RECUERDO) - 3: Labels indicando obligatoriedad y
+    placeholders explicativos en los campos del modal de añadir restaurante -->
+    <!-- H10 (AYUDA Y DOCUMENTACIÓN) - 3: Placeholders orientativos ("Bizkaia", "9XXXXXXXX", "https://...)
+    en los campos del modal, visibles cuando el campo está vacío, que desaparecen al escribir-->
       <!-- Nombre -->
       <ion-item>
         <ion-input

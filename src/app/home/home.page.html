@@ -1,7 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Guía de Restaurantes Euskadi</ion-title>
+    <!-- H2 (COINCIDENCIA CON MUNDO REAL) - 1: lenguaje no técnico en botones del header -->
     <ion-buttons slot="end">
+      <!-- H4 (CONSISTENCIA Y ESTÁNDARES) - 1: Los botones son iguales (slot="start" + texto corto) -->
+      <!-- H5 (PREVENCIÓN DE ERRORES) - 3: Los botones se deshabilitan mientras se está llevando a cabo
+      una operación para evitar condiciones de carrera, con [disabled]="cargando() || importando()"-->
+      <!-- H8 (AYUDA Y DOCUMENTACIÓN) - 1: Tooltips de botones (title="...") que aparecen solo al mover el ratón por encima -->
       <ion-button
         (click)="abrirModalAnadir()"
         [disabled]="cargando() || importando()"
@@ -34,6 +39,9 @@
 <ion-content class="ion-padding">
 
   <!-- Añadir mensaje cuando no hay datos -->
+  <!-- H6 (RECONOCIMIENTO EN LUGAR DE RECUERDO) - 2: Mensaje explicativo de opciones, que al cargar
+   restaurantes cambiará a un mensaje informando de cuántos restaurantes se muestran del total cargado -->
+  <!-- H8 (DISEÑO ESTÉTITO Y MINIMALISTA) - 1: El mensaje explicativo desaparece cuando hay datos cargados -->
   @if (!hayDatos()) {
     <ion-item lines="none" color="light" style="border-radius: 8px;">
       <ion-label class="ion-text-wrap">
@@ -44,11 +52,14 @@
   }
 
   <!-- Filtros -->
+  <!-- H2 (COINCIDENCIA MUNDO REAL) - 3: Nombres reales de localidades y territorios -->
   <ion-grid>
     <ion-row class="ion-align-items-center ion-justify-content-start">
       <!-- Filtro de búsqueda -->
+      <!-- H6 (RECONOCIMIENTO EN LUGAR DE RECUERDO) - 1: Placeholder explicativo en campo de búsqueda -->
       <ion-col size="12" size-md="3">
         <ion-item>
+          <!-- H7 (FLEXIBILIDAD Y EFICIENCIA DE USO) - 1: Se puede buscar por nombre si se sabe el nombre -->
           <ion-input
             label="Buscar"
             placeholder="Buscar por nombre..."
@@ -60,6 +71,7 @@
       </ion-col>
 
       <!-- Filtro de territorio -->
+      <!-- H3 (CONTROL Y LIBERTAD) - 3: Los select dan la libertad de deshacer las selecciones de territorio y localidad -->
       <ion-col size="12" size-md="3">
         <!--Podemos usar un ion-label para el título del filtro, pero podemos también usar el label del ion-select
           --De esta manera podemos hacer click encima de todo el ion-item para mostrar los valores. 
@@ -89,7 +101,10 @@
           -->
         <!--Si tenemos muchas localidades seleccionadas, estas se recortan mediante..., por eso añadimos [title] para mostrar un tooltip cuando ponemos el ratón sobre ella -->
         <!--<ion-label>Localidad</ion-label>-->
-        <ion-item>          
+        <ion-item>   
+          <!-- H7 (FLEXIBILIDAD Y EFICIENCIA DE USO) - 3: Se puede filtrar por varias localidades a la vez 
+           gracias al multiple="true"-->  
+          <!-- H10 (AYUDA Y DOCUMENTACIÓN) - 2: Tooltip sobre el select de localidad que muestra la(s) localidad(es) seleccionada(s) -->     
           <ion-select
             label="Localidad"
             labelPlacement="start"
@@ -114,6 +129,7 @@
   @if (hayDatos()) {
     <ion-item lines="none">
       <ion-label>
+      <!-- H6 (RECONOCIMIENTO EN LUGAR DE RECUERDO) - 2: Mensaje informativo de restaurantes filtrados y cargados -->
         Mostrando <strong>{{ restaurantesFiltrados().length }}</strong>
         de <strong>{{ restaurantesCargados().length }}</strong> restaurantes
         @if (restaurantesFiltrados().length === 0 && hayFiltrosActivos()) {
@@ -124,6 +140,10 @@
   }
 
   <!-- Tabla de restaurantes -->
+  <!-- H2 (COINCIDENCIA MUNDO REAL) - 2: Clasificaciones conocidas de 
+  restaurantes: estrellas Micheín y soles Repsol -->
+  <!-- H8 (DISEÑO ESTÉTICO Y MINIMALISTA) - 3: La tabla aparece solo 
+  cuando restaurantesFiltrados().length > 0 -->
   @if (restaurantesFiltrados().length > 0) {
     <div class="table-wrapper">
       <table class="restaurantes-table">
@@ -162,6 +182,7 @@
                 {{ repsolSoles(r) > 0 ? repsolSoles(r) : '-' }}
               </td>
               <td class="center">
+                <!-- H3 (CONTROL Y LIBERTAD) - 1: Opción de cancelar antes de borrar con AlertController -->
                 <ion-button fill="clear" color="danger" size="small"
                   title="Borrar restaurante"
                   (click)="borrarRestaurante(r)">
@@ -175,6 +196,8 @@
     </div>
   } @else {
     <!-- Mensaje cuando no hay restaurantes que coincidan con los filtros -->
+    <!-- H8 (DISEÑO ESTÉTICO Y MINIMALISTA) - 2: Mensaje sin resultados aparece solo cuando 
+     es necesario: cuando restaurantesFiltrados().length === 0 y hayDatos() -->
     @if (hayDatos()) {
       <ion-item lines="none" color="warning" style="margin-top: 16px; border-radius: 8px;">
         <ion-label class="ion-text-wrap">

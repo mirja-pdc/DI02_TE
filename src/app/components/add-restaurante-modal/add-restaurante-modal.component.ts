@@ -20,6 +20,7 @@ export class AddRestauranteModalComponent {
   guardando = signal(false);
 
   form = this.fb.nonNullable.group({
+    // H5 (PREVENCIÓN DE ERRORES) - 1: No deja guardar sin nombre o territorio
     documentName: ['', Validators.required],
     territory:    ['', Validators.required],
     locality:     [''],

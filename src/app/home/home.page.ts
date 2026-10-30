@@ -29,8 +29,10 @@ export class HomePage {
   restaurantesCargados = signal<Restaurante[]>([]);
 
   // true durante la carga de datos
+  // H1 (VISIBILIDAD) - 1: Spinner y texto al pulsar Cargar para que el usuario sepa que está cargando
   cargando = signal(false);
 
+  // H1 (VISIBILIDAD repetido) - 1: igual que con cargando, spinner y texto cuando se está importando
   // true durante la importación del JSON a Firebase
   importando = signal(false);
 
@@ -38,6 +40,8 @@ export class HomePage {
   hayDatos = computed(() => this.restaurantesCargados().length > 0);
 
   // Carga los restaurantes desde Firebase y muestra un toast de confirmación
+  // H1 (VISIBILIDAD) - 3: Toasts para informar de éxito o fallo al cargar restaurantes
+  // El toast de color danger no se cierra solo para llamar la atención del usuario sobre el error
   async cargarDatos() {
     this.cargando.set(true);
     try {
@@ -52,6 +56,7 @@ export class HomePage {
   }
 
   // Muestra un diálogo de confirmación antes de iniciar la importación
+  // H5 (PREVENCIÓN DE ERRORES) - 2: El AlertController previene la importación accidental
   async confirmarImportacion() {
     const alert = await this.alertCtrl.create({
       header: 'Confirmar importación',
@@ -65,9 +70,10 @@ export class HomePage {
     await alert.present();
   }
 
-  // Borra todos los datos de Firebase y sube los restaurantes del JSON local
+  // Borra todos los datos de Firebase y sube los restaurantes del JSON local 
   async importarJSON() {
     this.importando.set(true);
+    // H1 (VISIBILIDAD) - 2: Overlay para informar al usuario de procesos largos como borrar e importar datos
     const loading = await this.loadingCtrl.create({
       message: 'Borrando datos anteriores...',
       backdropDismiss: false
@@ -83,7 +89,9 @@ export class HomePage {
       await loading.dismiss();
       console.error('Error al importar JSON:', error);
       const msg = error?.code === 'permission-denied'
+        // H9 (RECONOCER, DIAGNOSTICAR Y RECUPERARSE DE ERRORES) - 1: Diagnóstico concreto (sin permisos en Firebase) para desarrolladores
         ? 'Sin permisos en Firebase. Revisa las reglas de seguridad.'
+        // H9 (RECONOCER, DIAGNOSTICAR Y RECUPERARSE DE ERRORES) - 2: Diagnóstico general (problemas de red) para usuarios
         : 'Error al importar. Revisa tu conexión a internet.';
       this.mostrarToast(msg, 'danger');
     } finally {
@@ -93,6 +101,7 @@ export class HomePage {
 
   // Muestra confirmación y borra el restaurante indicado de Firebase y de la lista local
   async borrarRestaurante(r: Restaurante) {
+    // H3 (CONTROL Y LIBERTAD) - 1: Opción de cancelar antes de borrar con AlertController
     const alert = await this.alertCtrl.create({
       header: 'Confirmar borrado',
       subHeader: `¿Deseas borrar el restaurante ${r.documentName}?`,
@@ -111,6 +120,7 @@ export class HomePage {
               this.restaurantesCargados.update(lista => lista.filter(x => x.id !== r.id));
               this.mostrarToast(`${r.documentName} eliminado`, 'success');
             } catch {
+              // H9 (RECONOCER, DIAGNOSTICAR Y RECUPERARSE DE ERRORES) - 3: Mensaje de error si ha habido problemas al borrar el restaurante
               this.mostrarToast('Error al borrar el restaurante', 'danger');
             }
           }
@@ -133,6 +143,7 @@ export class HomePage {
   }
 
   // Muestra un toast con el mensaje y color indicados
+  // H4 (CONSISTENCIA Y ESTÁNDARES) - 2: Toasts con colores estándar (verde para éxito, rojo para peligro)
   private async mostrarToast(mensaje: string, color: 'success' | 'danger' | 'warning') {
     const toast = await this.toastCtrl.create({
       message: mensaje,
@@ -157,6 +168,7 @@ export class HomePage {
   );
 
   // Resetea todos los filtros a sus valores iniciales
+  // H3 (CONTROL Y LIBERTAD) - 2: Opción de limpiar todos los filtros
   limpiarTodosFiltros() {
     this.textoBusqueda.set('');
     this.territorioSeleccionado.set('');
@@ -205,6 +217,9 @@ export class HomePage {
   // ############################### REGION RESULTADOS ###############################
 
   // Lista filtrada de restaurantes según todos los filtros activos
+  // H7 (FLEXIBILIDAD Y EFICIENCIA DE USO) - 2: Se pueden usar todos los filtros a la vez
+  // gracias al computed restaurantesFiltrados, que se actualiza con los signals
+  // textoBusqueda, territorioSeleccionado y localidadesSeleccionadas
   restaurantesFiltrados = computed(() => {
     let lista = this.restaurantesCargados();
 
