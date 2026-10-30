@@ -6,7 +6,7 @@
       <!-- H4 (CONSISTENCIA Y ESTÁNDARES) - 1: Los botones son iguales (slot="start" + texto corto) -->
       <!-- H5 (PREVENCIÓN DE ERRORES) - 3: Los botones se deshabilitan mientras se está llevando a cabo
       una operación para evitar condiciones de carrera, con [disabled]="cargando() || importando()"-->
-      <!-- H8 (AYUDA Y DOCUMENTACIÓN) - 1: Tooltips de botones (title="...") que aparecen solo al mover el ratón por encima -->
+      <!-- H10 (AYUDA Y DOCUMENTACIÓN) - 1: Tooltips de botones (title="...") que aparecen solo al mover el ratón por encima -->
       <ion-button
         (click)="abrirModalAnadir()"
         [disabled]="cargando() || importando()"
@@ -41,7 +41,7 @@
   <!-- Añadir mensaje cuando no hay datos -->
   <!-- H6 (RECONOCIMIENTO EN LUGAR DE RECUERDO) - 2: Mensaje explicativo de opciones, que al cargar
    restaurantes cambiará a un mensaje informando de cuántos restaurantes se muestran del total cargado -->
-  <!-- H8 (DISEÑO ESTÉTITO Y MINIMALISTA) - 1: El mensaje explicativo desaparece cuando hay datos cargados -->
+  <!-- H8 (DISEÑO ESTÉTICO Y MINIMALISTA) - 1: El mensaje explicativo desaparece cuando hay datos cargados -->
   @if (!hayDatos()) {
     <ion-item lines="none" color="light" style="border-radius: 8px;">
       <ion-label class="ion-text-wrap">
